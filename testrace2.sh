@@ -353,13 +353,13 @@ echo
 read -p " 请输入数字 [1-8]:" node
 case "$node" in
 	1)
-	ISP_name="上海天翼"    && ip=101.227.255.45
+	ISP_name="上海天翼"    && ip=222.73.187.33
 	;;
 	2)
 	ISP_name="厦门电信"	   && ip=117.28.254.129
 	;;
 	3)
-	ISP_name="襄阳电信"	   && ip=58.51.94.106
+	ISP_name="襄阳电信"	   && ip=111.177.18.254
 	;;
 	4)
 	ISP_name="南昌天翼"	   && ip=59.63.232.237
@@ -371,10 +371,10 @@ case "$node" in
 	ISP_name="南昌电信2"   && ip=182.98.238.226
 	;;	
 	7)
-	ISP_name="深圳电信"	   && ip=119.147.52.35
+	ISP_name="深圳电信"	   && ip=103.45.0.57
 	;;	
 	8)
-	ISP_name="广州天翼"    && ip=14.215.116.1
+	ISP_name="广州天翼"    && ip=113.96.5.133
 	;;	
 	*)
 	clear
@@ -401,29 +401,29 @@ echo -e "${Green_font}请选择目的地节点 ${Font_suffix}
 	   
  ${Green_font}4.${Font_suffix} 合肥联通
  
- ${Green_font}5.${Font_suffix} 南京联通
+ ${Green_font}5.${Font_suffix} 徐州联通
   
- ${Green_font}6.${Font_suffix} 杭州联通"
+ ${Green_font}6.${Font_suffix} 金华联通"
 echo
 read -p " 请输入数字 [1-6]:" node
 case "$node" in
 	1)
-	ISP_name="拉萨联通"    && ip=221.13.70.244
+	ISP_name="拉萨联通"    && ip=219.158.101.234
 	;;
 	2)
-	ISP_name="重庆联通"	   && ip=113.207.32.65
+	ISP_name="重庆联通"	   && ip=113.207.32.33
 	;;
 	3)
-	ISP_name="郑州联通"	   && ip=61.168.23.74
+	ISP_name="郑州联通"	   && ip=219.158.4.70
 	;;
 	4)
 	ISP_name="合肥联通"	   && ip=112.122.10.26
 	;;
 	5)
-	ISP_name="南京联通"   && ip=58.240.53.78
+	ISP_name="徐州联通"   && ip=112.85.231.129
 	;;	
 	6)
-	ISP_name="杭州联通"   && ip=101.71.241.238
+	ISP_name="金华联通"   && ip=221.12.163.37
 	;;	
 	*)
 	clear
@@ -448,21 +448,21 @@ echo -e "${Green_font}请选择目的地节点 ${Font_suffix}
 	   
  ${Green_font}3.${Font_suffix} 合肥移动
 	   
- ${Green_font}4.${Font_suffix} 合肥联通"
+ ${Green_font}4.${Font_suffix} 杭州移动"
 echo
 read -p " 请输入数字 [1-4]:" node
 case "$node" in
 	1)
-	ISP_name="上海移动"    && ip=221.130.188.251
+	ISP_name="上海移动"    && ip=221.183.67.205
 	;;
 	2)
-	ISP_name="成都移动"	   && ip=183.221.247.9
+	ISP_name="成都移动"	   && ip=223.87.27.129
 	;;
 	3)
-	ISP_name="合肥移动"	   && ip=120.209.140.60
+	ISP_name="合肥移动"	   && ip=120.210.207.1
 	;;
 	4)
-	ISP_name="杭州移动"	   && ip=112.17.0.106
+	ISP_name="杭州移动"	   && ip=120.199.239.5
 	;;
 	*)
 	clear

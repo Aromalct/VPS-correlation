@@ -24,11 +24,13 @@ echo && echo -e "${Green_font} 欢迎使用VPS重装部署脚本 ${Font_suffix}
  ${Green_font}2.${Font_suffix} 修改ssh端口
  ${Green_font}3.${Font_suffix} 修改系统时区
  ${Green_font}4.${Font_suffix} 系统升级
+ ${Green_font}5.${Font_suffix} 安装开启BBR
+ 
 ————————————功能安装————————————
- ${Green_font}5.${Font_suffix} 安装acme.sh
- ${Green_font}6.${Font_suffix} 安装caddy2
- ${Green_font}7.${Font_suffix} 安装V2-UI
- ${Green_font}8.${Font_suffix} 安装X-UI
+ ${Green_font}6.${Font_suffix} 安装acme.sh
+ ${Green_font}7.${Font_suffix} 安装caddy2
+ ${Green_font}8.${Font_suffix} 安装V2-UI
+ ${Green_font}9.${Font_suffix} 安装X-UI
 ————————————————————————————————"
 echo
 read -p " 请输入数字 [1-8]:" function
@@ -46,15 +48,18 @@ case "$function" in
 	system_update
 	;;
 	5)
-	install_acme
+	system_update
 	;;
 	6)
-	install_caddy2
+	install_acme
 	;;
 	7)
-	install_V2_UI
+	install_caddy2
 	;;
 	8)
+	install_V2_UI
+	;;
+	9)
 	install_X_UI
 	;;
 		
@@ -96,29 +101,70 @@ system_update(){
 	reto_menu_exit
 }
 
+install_BBR(){
+	bash tcp.sh
+	re_run_BBR
+}
+re_run_BBR(){
+	echo -e "${Green_font} 返回BBR菜单or返回主菜单：${Font_suffix}
+
+     ${Green_font}1.${Font_suffix} 返回BBR菜单
+ 
+     ${Green_font}2.${Font_suffix} 返回主菜单
+	 
+	 ${Green_font}3.${Font_suffix} 退出脚本"
+
+    echo
+    read -p " 请输入数字 [1-3]:" function
+    case "$function" in
+	    1)
+    	install_BBR
+	    ;;
+     	2)
+    	start_menu
+	    ;;
+	    3)
+    	exit 0
+    	;;
+    	*)
+    	clear
+    	echo -e "${Error}:请输入正确数字 [1-3]"
+    	sleep 3s
+    	install_BBR
+	    ;;
+    esac
+}
+
+
+
 install_acme(){
 	echo -e "安装acme.sh"
 	apt-get -y install curl sudo socat
 	curl  https://get.acme.sh | sh
 	. .bashrc
-	acme.sh --upgrade --auto-upgrade
+	bash /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 	echo -e "设置环境变量"
-	read -p "设置Account_ID:" CF_Account_ID
-	read -p "设置CF_Token:" CF_Token
-	export CF_Account_ID=$CF_Account_ID
-	export CF_Token=$CF_Token
+    export CF_Token="7SwQ9DMEspervzHdYmYjUnLXRsqnwaScrNKwJESS"
+    export CF_Account_ID="2efe8bf5451b8ada432a5ef2b04ee7cd"
 	echo -e "测试从指定服务器申请证书"
 	read -p "请输入域名:" domain
-	acme.sh --set-default-ca --server letsencrypt --issue --test -d $domain --dns  dns_cf --keylength ec-256
+	bash /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt --issue --test -d $domain --dns  dns_cf --keylength ec-256 --force
 	#填加回车继续命令
-	echo -e "正式从指定服务器申请证书"
-	acme.sh --set-default-ca --server letsencrypt --issue -d $domain dns_cf --keylength ec-256 --force
-	echo -e "安装（拷贝）证书"
-	read -p "设置证书文件夹:" ssl_filename
-	mkdir /etc/ssl/$ssl_filename
-	acme.sh --install-cert -d $domain --ecc \
-            --fullchain-file /etc/ssl/xray_cert/$domain.crt \
-            --key-file /etc/ssl/xray_cert/$domain.key
+	read -p "(测试申请是否通过：y/n):" yn
+		[[ -z "${yn}" ]] && yn="y"
+		if [[ ${yn} == [Yy] ]]; then
+				echo -e "正式从指定服务器申请证书"
+	            bash /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt --issue -d $domain --dns dns_cf --keylength ec-256 --force
+	            echo -e "安装（拷贝）证书"
+	            read -p "设置证书文件夹:" ssl_filename
+	            mkdir /etc/ssl/$ssl_filename
+	            bash /root/.acme.sh/acme.sh --install-cert -d $domain --ecc \
+                        --fullchain-file /etc/ssl/$ssl_filename/$domain.crt \
+                        --key-file /etc/ssl/$ssl_filename/$domain.key
+			else
+			echo && echo "证书申请、安装失败..." && echo
+		fi
+	
 	reto_menu_exit
 }
 
@@ -166,14 +212,11 @@ reto_menu_exit(){
     	clear
     	echo -e "${Error}:请输入正确数字 [1-2]"
     	sleep 3s
-    	test_NC
+    	start_menu
 	    ;;
     esac
 
 }
-
-
-
 
 
 start_menu
