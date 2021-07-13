@@ -24,16 +24,17 @@ echo && echo -e "${Green_font} 欢迎使用VPS重装部署脚本 ${Font_suffix}
  ${Green_font}2.${Font_suffix} 修改ssh端口
  ${Green_font}3.${Font_suffix} 修改系统时区
  ${Green_font}4.${Font_suffix} 系统升级
- ${Green_font}5.${Font_suffix} 安装开启BBR
+ ${Green_font}5.${Font_suffix} 路由测试
+ ${Green_font}6.${Font_suffix} 安装开启BBR
  
 ————————————功能安装————————————
- ${Green_font}6.${Font_suffix} 安装acme.sh
- ${Green_font}7.${Font_suffix} 安装caddy2
- ${Green_font}8.${Font_suffix} 安装V2-UI
- ${Green_font}9.${Font_suffix} 安装X-UI
+ ${Green_font}7.${Font_suffix} 安装acme.sh
+ ${Green_font}8.${Font_suffix} 安装caddy2
+ ${Green_font}9.${Font_suffix} 安装V2-UI
+ ${Green_font}10.${Font_suffix} 安装X-UI
 ————————————————————————————————"
 echo
-read -p " 请输入数字 [1-8]:" function
+read -p " 请输入数字 [1-10]:" function
 case "$function" in
 	1)
 	chang_ssh_password
@@ -48,29 +49,33 @@ case "$function" in
 	system_update
 	;;
 	5)
-	system_update
+	Routing_test
 	;;
 	6)
-	install_acme
+	install_BBR
 	;;
 	7)
-	install_caddy2
+	install_acme
 	;;
 	8)
-	install_V2_UI
+	install_caddy2
 	;;
 	9)
+	install_V2_UI
+	;;
+	10)
 	install_X_UI
 	;;
 		
 	*)
 	clear
-	echo -e "${Error}:请输入正确数字 [1-8]"
+	echo -e "${Error}:请输入正确数字 [1-10]"
 	sleep 3s
 	start_menu
 	;;
 esac
 }
+
 
 
 
@@ -101,7 +106,15 @@ system_update(){
 	reto_menu_exit
 }
 
+Routing_test(){
+	wget https://github.com/Aromalct/VPS-correlation/blob/main/VPS-sh/testrace2.sh
+	bash testrace2.sh
+	reto_menu_exit
+}
+
+
 install_BBR(){
+	wget https://github.com/Aromalct/VPS-correlation/blob/main/VPS-sh/tcp.sh
 	bash tcp.sh
 	re_run_BBR
 }
