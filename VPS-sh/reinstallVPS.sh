@@ -275,8 +275,7 @@ install_iptables_persistent(){
 
 
 Routing_test(){
-#	wget https://github.com/Aromalct/VPS-correlation/blob/main/VPS-sh/testrace2.sh
-	bash testrace2.sh
+	bash <(curl -Ls https://raw.githubusercontent.com/Aromalct/VPS-correlation/main/VPS-sh/testrace2.sh)
 	reto_menu_exit
 }
 
@@ -290,8 +289,7 @@ install_BBR(){
     echo
     read -p " 请输入数字 [1-2]:" function
 	if [[ ${function} == [1] ]]; then
-		      #wget https://github.com/Aromalct/VPS-correlation/blob/main/VPS-sh/tcp.sh
-    	      bash tcp.sh
+	          bash <(curl -Ls https://raw.githubusercontent.com/Aromalct/VPS-correlation/main/VPS-sh/tcp.sh)
 			else
               echo -e "${Green_font}========修改系统变量，下面显示的内容为修改后的系统变量========${Font_suffix}"
 		      echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
