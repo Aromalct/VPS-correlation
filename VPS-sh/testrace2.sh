@@ -101,16 +101,13 @@ esac
 #MTR测试
 test_MTR(){
 	select_ISP
-	echo -e "${Info} MTR测试 到 ${ISP_name} 中..."
+	echo -e "${Green_font}MTR测试 到 ${ISP_name} 中...${Font_suffix}"
 	mtr ${ip}
-	echo -e "${Info} MTR测试 到 ${ISP_name} 完成！"
-	echo
-	echo -e "#################################################################################################################"
-	echo        
-	echo -e "${Green_font} 返回主菜单or其他节点MTR测试?请选择：${Font_suffix}
-
+	echo -e "${Green_font}MTR测试 到 ${ISP_name} 完成！${Font_suffix}"
+	echo -e "${Green_font}#################################################################################################################${Font_suffix}"
+	echo -e "${Green_font}
+	返回主菜单or其他节点MTR测试?请选择：${Font_suffix}
      ${Green_font}1.${Font_suffix} 其他节点MTR测试
- 
      ${Green_font}2.${Font_suffix} 返回主菜单"
     echo
     read -p " 请输入数字 [1-2]:" function
@@ -125,7 +122,6 @@ test_MTR(){
     	clear
     	echo -e "${Error}:请输入正确数字 [1-2]"
     	sleep 3s
-    	repeat_test_NC
 	    ;;
     esac	
 	
@@ -165,31 +161,24 @@ test_NC_all(){
 }
 result_NC_all(){
 	ISP_name=$2
-	echo -e "${Info} 测试路由 到 ${ISP_name} 中..."
-	echo
+	echo -e "${Green_font}*****************************************************************************${Font_suffix}"
+	echo -e "${Green_font}测试路由 到 ${ISP_name} 中...${Font_suffix}"
 	./besttrace -q 1 -g cn $1
-	echo -e "${Info} 测试路由 到 ${ISP_name} 完成！"
-	echo
-	echo "*****************************************************************************"
-	echo
+	echo -e "${Green_font}测试路由 到 ${ISP_name} 完成！${Font_suffix}"
+	echo -e "${Green_font}*****************************************************************************${Font_suffix}"
 }
 
 
 #南昌三网单测
 test_NC(){
 	node_NC
-	echo -e "#################################################################################################################"
-    echo -e "${Info} 测试路由 到 ${ISP_name} 中..."
-	echo
+	echo -e "${Green_font}#################################################################################################################${Font_suffix}"
+    echo -e "${Green_font}测试路由 到 ${ISP_name} 中...${Font_suffix}"
 	./besttrace -q 1 -g cn $ip
-	echo -e "${Info} 测试路由 到 ${ISP_name} 完成！"
-	echo
-	echo -e "#################################################################################################################"
-	echo        
-	echo -e "${Green_font} 返回主菜单or再单测南昌三网?请选择：${Font_suffix}
-
+	echo -e "${Green_font}测试路由 到 ${ISP_name} 完成！${Font_suffix}"
+	echo -e "${Green_font}#################################################################################################################${Font_suffix}"
+	echo -e "${Green_font}返回主菜单or再单测南昌三网?请选择：${Font_suffix}
      ${Green_font}1.${Font_suffix} 再单测南昌三网
- 
      ${Green_font}2.${Font_suffix} 返回主菜单"
     echo
     read -p " 请输入数字 [1-2]:" function
@@ -215,18 +204,13 @@ test_NC(){
 #全国四网测试
 test_pre_jiedian(){
 	select_ISP
-	echo -e "#################################################################################################################"
-    echo -e "${Info} 测试路由 到 ${ISP_name} 中..."
-	echo
+	echo -e "${Green_font}#################################################################################################################${Font_suffix}"
+    echo -e "${Green_font}测试路由 到 ${ISP_name} 中...${Font_suffix}"
 	./besttrace -q 1 -g cn $ip
 	echo -e "${Info} 测试路由 到 ${ISP_name} 完成！"
-	echo
-	echo -e "#################################################################################################################"
-	echo        
+	echo -e "${Green_font}#################################################################################################################${Font_suffix}"
 	echo -e "${Green_font} 返回主菜单or测试其他运营商/目的地?请选择：${Font_suffix}
-
      ${Green_font}1.${Font_suffix} 测试其他运营商/目的地
-
      ${Green_font}2.${Font_suffix} 返回主菜单"
     echo
     read -p " 请输入数字 [1-2]:" function
@@ -257,17 +241,13 @@ test_single(){
 }
 result_test_single(){
 	ISP_name=$ip
-	echo -e "${Info} 测试路由 到 ${ISP_name} 中..."
-	echo
+	echo -e "${Green_font}#################################################################################################################${Font_suffix}"
+    echo -e "${Green_font}测试路由 到 ${ISP_name} 中...${Font_suffix}"
 	./besttrace -q 1 -g cn $ip
 	echo -e "${Info} 测试路由 到 ${ISP_name} 完成！"
-    echo
-	echo -e "#################################################################################################################"
-	echo        
+	echo -e "${Green_font}#################################################################################################################${Font_suffix}"  
 	echo -e "${Green_font} 返回主菜单or再测试一次?请选择：${Font_suffix}
-
      ${Green_font}1.${Font_suffix} 再测试一次
- 
      ${Green_font}2.${Font_suffix} 返回主菜单"
     echo
     read -p " 请输入数字 [1-2]:" function
@@ -292,16 +272,12 @@ result_test_single(){
 
 #选择运营商
 select_ISP(){
-echo && echo -e "#################################################################################################################"
-echo
+clear
+echo -e "${Green_font}#################################################################################################################${Font_suffix}"
 echo -e "${Green_font}请选择运营商${Font_suffix}
-
  ${Green_font}1.${Font_suffix} 中国电信
-	   
  ${Green_font}2.${Font_suffix} 中国联通
-	   
  ${Green_font}3.${Font_suffix} 中国移动
-	   
  ${Green_font}4.${Font_suffix} 教育网"
 echo
 read -p " 请输入数字 [1-4]:" ISP
@@ -330,24 +306,16 @@ esac
 
 #中国电信运营商
 node_1(){
-echo && echo -e "#################################################################################################################"
-echo
+clear
+echo -e "${Green_font}#################################################################################################################${Font_suffix}"
 echo -e "${Green_font}请选择目的地节点 ${Font_suffix}
-
  ${Green_font}1.${Font_suffix} 上海天翼
-	   
  ${Green_font}2.${Font_suffix} 厦门电信
-	   
  ${Green_font}3.${Font_suffix} 襄阳电信
-	   
  ${Green_font}4.${Font_suffix} 南昌天翼
- 
  ${Green_font}5.${Font_suffix} 南昌电信1
-  
  ${Green_font}6.${Font_suffix} 南昌电信2
-
  ${Green_font}7.${Font_suffix} 深圳电信
-
  ${Green_font}8.${Font_suffix} 广州天翼 "
 echo
 read -p " 请输入数字 [1-8]:" node
@@ -389,20 +357,14 @@ esac
 
 #中国联通运营商
 node_2(){
-echo && echo -e "#################################################################################################################"
-echo
+clear
+echo -e "${Green_font}#################################################################################################################${Font_suffix}"
 echo -e "${Green_font}请选择目的地节点 ${Font_suffix}
-
  ${Green_font}1.${Font_suffix} 拉萨联通
-	   
  ${Green_font}2.${Font_suffix} 重庆联通
-	   
  ${Green_font}3.${Font_suffix} 郑州联通
-	   
  ${Green_font}4.${Font_suffix} 合肥联通
- 
  ${Green_font}5.${Font_suffix} 徐州联通
-  
  ${Green_font}6.${Font_suffix} 金华联通"
 echo
 read -p " 请输入数字 [1-6]:" node
@@ -438,16 +400,12 @@ esac
 
 #中国移动运营商
 node_3(){
-echo && echo -e "#################################################################################################################"
-echo
+clear
+echo -e "${Green_font}#################################################################################################################${Font_suffix}"
 echo -e "${Green_font}请选择目的地节点 ${Font_suffix}
-
  ${Green_font}1.${Font_suffix} 上海移动
-	   
  ${Green_font}2.${Font_suffix} 成都移动
-	   
  ${Green_font}3.${Font_suffix} 合肥移动
-	   
  ${Green_font}4.${Font_suffix} 杭州移动"
 echo
 read -p " 请输入数字 [1-4]:" node
@@ -477,10 +435,9 @@ esac
 
 #教育网运营商
 node_4(){
-echo && echo -e "#################################################################################################################"
-echo
+clear
+echo -e "${Green_font}#################################################################################################################${Font_suffix}"
 echo -e "${Green_font}请选择目的地节点 ${Font_suffix}
-
  ${Green_font}1.${Font_suffix} 北京教育网"
 echo
 read -p " 请输入数字 [1]:" node
@@ -501,16 +458,12 @@ esac
 
 #南昌三网
 node_NC(){
-echo && echo -e "#################################################################################################################"
-echo
+clear
+echo -e "${Green_font}#################################################################################################################${Font_suffix}"
 echo -e "${Green_font}请选择目的地节点 ${Font_suffix}
-
  ${Green_font}1.${Font_suffix} 南昌电信
- 
  ${Green_font}2.${Font_suffix} 南昌天翼
-
  ${Green_font}3.${Font_suffix} 南昌联通
-
  ${Green_font}4.${Font_suffix} 南昌移动"
 echo
 read -p " 请输入数字 [1-4]:" node
