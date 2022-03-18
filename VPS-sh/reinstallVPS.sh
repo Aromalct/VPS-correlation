@@ -27,14 +27,16 @@ echo && echo -e "${Green_font} 欢迎使用VPS重装部署脚本 ${Font_suffix}
  ${Green_font}5.${Font_suffix} 创建密钥对及设置
  ${Green_font}6.${Font_suffix} 安装iptables-persistent工具并禁用25端口
  ${Green_font}7.${Font_suffix} 路由测试
- ${Green_font}8.${Font_suffix} 安装开启BBR
+ ${Green_font}8.${Font_suffix} 安装or开启BBR
+ ${Green_font}9.${Font_suffix} 查看暴力破解情况
+
  
 ————————————功能安装————————————
- ${Green_font}9.${Font_suffix} 安装acme.sh
- ${Green_font}10.${Font_suffix} 安装caddy2
- ${Green_font}11.${Font_suffix} 安装V2-UI
- ${Green_font}12.${Font_suffix} 安装X-UI
- ${Green_font}13.${Font_suffix} 安装Soga-V2Board
+ ${Green_font}10.${Font_suffix} 安装acme.sh
+ ${Green_font}11.${Font_suffix} 安装caddy2
+ ${Green_font}12.${Font_suffix} 安装V2-UI
+ ${Green_font}13.${Font_suffix} 安装X-UI
+ ${Green_font}14.${Font_suffix} 安装Soga-V2Board
  
 ————————————————————————————————"
 echo
@@ -65,18 +67,21 @@ case "$function" in
 	install_BBR
 	;;
 	9)
-	install_acme
+	Authlog_check
 	;;
 	10)
-	install_caddy2
+	install_acme
 	;;
 	11)
-	install_V2_UI
+	install_caddy2
 	;;
 	12)
-	install_X_UI
+	install_V2_UI
 	;;
 	13)
+	install_X_UI
+	;;
+	14)
 	install_Soga_V2Board
 	;;	
 	*)
@@ -254,9 +259,9 @@ install_iptables_persistent(){
 	iptables -I FORWARD -p tcp --dport 25 -j DROP
 	iptables -I INPUT -p tcp --dport 25 -j DROP
 	iptables -I OUTPUT -p tcp --dport 25 -j DROP
-	echo -e "安装过程中会询问您是否要保存当前IPv4规则、IPv6规则，全选YES"
+	echo -e "${Green_font}安装过程中会询问您是否要保存当前IPv4规则、IPv6规则，全选YES${Font_suffix}"
 	apt-get install -y iptables-persistent
-	echo -e "已在/etc目录下生成/iptables目录，并生成rules.v4文件用于存放IPv4规则，rules.v6文件用于存放IPv6规则。"
+	echo -e "${Green_font}已在/etc目录下生成/iptables目录，并生成rules.v4文件用于存放IPv4规则，rules.v6文件用于存放IPv6规则。${Font_suffix}"
     read -p "(是否测试生效情况：y/n):" yn
 		[[ -z "${yn}" ]] && yn="y"
 		if [[ ${yn} == [Yy] ]]; then
@@ -277,40 +282,49 @@ Routing_test(){
 
 
 install_BBR(){
-#	wget https://github.com/Aromalct/VPS-correlation/blob/main/VPS-sh/tcp.sh
-	bash tcp.sh
-	re_run_BBR
-}
-re_run_BBR(){
-	echo -e "${Green_font} 返回BBR菜单or返回主菜单：${Font_suffix}
+	echo -e "${Green_font} 根据系统是否自带BBR选择（1.安装：不带或想重装自选的BBR；2.系统自带仅开启）${Font_suffix}
 
-     ${Green_font}1.${Font_suffix} 返回BBR菜单
+     ${Green_font}1.${Font_suffix} 安装或重装自选BBR
  
-     ${Green_font}2.${Font_suffix} 返回主菜单
-	 
-	 ${Green_font}3.${Font_suffix} 退出脚本"
-
+     ${Green_font}2.${Font_suffix} 系统自带仅开启"
     echo
-    read -p " 请输入数字 [1-3]:" function
-    case "$function" in
-	    1)
-    	install_BBR
-	    ;;
-     	2)
-    	start_menu
-	    ;;
-	    3)
-    	exit 0
-    	;;
-    	*)
-    	clear
-    	echo -e "${Error}:请输入正确数字 [1-3]"
-    	sleep 3s
-    	install_BBR
-	    ;;
-    esac
+    read -p " 请输入数字 [1-2]:" function
+	if [[ ${function} == [1] ]]; then
+		      #wget https://github.com/Aromalct/VPS-correlation/blob/main/VPS-sh/tcp.sh
+    	      bash tcp.sh
+			else
+              echo -e "${Green_font}========修改系统变量，下面显示的内容为修改后的系统变量========${Font_suffix}"
+		      echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+              echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+	          #保存生效
+	          sysctl -p
+			  echo -e "${Green_font}====查看内核是否已开启BBR，显示以下即已开启：
+net.ipv4.tcp_available_congestion_control = bbr cubic reno${Font_suffix}"		
+		      sysctl net.ipv4.tcp_available_congestion_control
+			  echo -e "${Green_font}====查看BBR是否启动，显示以下即启动成功：
+tcp_bbr                xxxxx  xx${Font_suffix}"		
+		      lsmod | grep bbr	
+		fi
+	reto_menu_exit
 }
 
+
+
+
+Authlog_check(){
+    echo -e "${Green_font}用密码登陆成功的IP地址及次数:${Font_suffix}"
+	grep "Accepted password for root" /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -nr | more
+	echo -e "${Green_font}	${Font_suffix}"
+	echo -e "${Green_font}用密码登陆失败的IP地址及次数（下面无IP等数字代表未受到暴力破解密码攻击）:${Font_suffix}"
+	grep "Failed password for root" /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -nr | more
+	echo -e "${Green_font}	${Font_suffix}"
+	echo -e "${Green_font}猜用户名失败的IP地址及次数（下面无IP等数字代表未受到猜用户名攻击）:${Font_suffix}"
+	grep "Failed password for invalid user" /var/log/auth.log | awk '{print $13}' | sort | uniq -c | sort -nr | more
+	echo -e "${Green_font}
+	
+	${Font_suffix}"
+    reto_menu_exit
+}
 
 
 install_acme(){
@@ -373,9 +387,7 @@ install_X_UI(){
 reto_menu_exit(){
 
 	echo -e "${Green_font} 返回主菜单or退出脚本：${Font_suffix}
-
      ${Green_font}1.${Font_suffix} 返回主菜单
- 
      ${Green_font}2.${Font_suffix} 退出脚本"
     echo
     read -p " 请输入数字 [1-2]:" function
