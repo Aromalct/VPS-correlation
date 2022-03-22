@@ -348,8 +348,8 @@ install_acme(){
 #	            mkdir /etc/ssl/$ssl_filename
 	            mkdir /etc/ssl/$domain
 	            bash /root/.acme.sh/acme.sh --install-cert -d $domain --ecc \
-                        --fullchain-file /etc/ssl/$ssl_filename/$domain.crt \
-                        --key-file /etc/ssl/$ssl_filename/$domain.key
+                        --fullchain-file /etc/ssl/$domain/$domain.crt \
+                        --key-file /etc/ssl/$domain/$domain.key
 			else
 			echo && echo "证书申请、安装失败..." && echo
 		fi
