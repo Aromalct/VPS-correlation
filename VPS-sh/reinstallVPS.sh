@@ -219,7 +219,8 @@ location ~ .*\.(js|css)?$
 
 system_update(){
 	apt-get update
-    apt-get upgrade
+        apt-get upgrade
+	apt-get -y install curl sudo
 	reto_menu_exit
 }
 
