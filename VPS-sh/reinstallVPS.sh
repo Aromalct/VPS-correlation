@@ -26,17 +26,18 @@ echo && echo -e "${Green_font} 欢迎使用VPS重装部署脚本 ${Font_suffix}
  ${Green_font}4.${Font_suffix} 改ssh端口
  ${Green_font}5.${Font_suffix} 创建密钥对及设置
  ${Green_font}6.${Font_suffix} 安装iptables-persistent工具并禁用25端口
- ${Green_font}7.${Font_suffix} 路由测试
- ${Green_font}8.${Font_suffix} 安装or开启BBR
- ${Green_font}9.${Font_suffix} 查看暴力破解情况
+ ${Green_font}7.${Font_suffix} 测试邮件端口（25）禁用情况
+ ${Green_font}8.${Font_suffix} 路由测试
+ ${Green_font}9.${Font_suffix} 安装or开启BBR
+ ${Green_font}10.${Font_suffix} 查看暴力破解情况
 
  
 ————————————功能安装————————————
- ${Green_font}10.${Font_suffix} 安装acme.sh
- ${Green_font}11.${Font_suffix} 安装caddy2
- ${Green_font}12.${Font_suffix} 安装V2-UI
- ${Green_font}13.${Font_suffix} 安装X-UI
- ${Green_font}14.${Font_suffix} 安装Soga-V2Board
+ ${Green_font}11.${Font_suffix} 安装acme.sh
+ ${Green_font}12.${Font_suffix} 安装caddy2
+ ${Green_font}13.${Font_suffix} 安装V2-UI
+ ${Green_font}14.${Font_suffix} 安装X-UI
+ ${Green_font}15.${Font_suffix} 安装Soga-V2Board
  
 ————————————————————————————————"
 echo
@@ -61,27 +62,30 @@ case "$function" in
 	install_iptables_persistent
 	;;
 	7)
-	Routing_test
+	Test_port_disablement
 	;;
 	8)
-	install_BBR
+	Routing_test
 	;;
 	9)
-	Authlog_check
+	install_BBR
 	;;
 	10)
-	install_acme
+	Authlog_check
 	;;
 	11)
-	install_caddy2
+	install_acme
 	;;
 	12)
-	install_V2_UI
+	install_caddy2
 	;;
 	13)
-	install_X_UI
+	install_V2_UI
 	;;
 	14)
+	install_X_UI
+	;;
+	15)
 	install_Soga_V2Board
 	;;	
 	*)
@@ -272,7 +276,11 @@ install_iptables_persistent(){
 		fi
 }
 
-
+Test_port_disablement(){
+	read -p "请输入端口:" port
+	nc -vz smtp-relay.gmail.com $port
+	reto_menu_exit
+}
 
 
 Routing_test(){
