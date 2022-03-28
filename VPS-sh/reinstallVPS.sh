@@ -271,9 +271,8 @@ install_iptables_persistent(){
 		[[ -z "${yn}" ]] && yn="y"
 		if [[ ${yn} == [Yy] ]]; then
 				nc -vz smtp-relay.gmail.com 25
-			else
-			reto_menu_exit
 		fi
+    reto_menu_exit
 }
 
 Test_port_disablement(){
