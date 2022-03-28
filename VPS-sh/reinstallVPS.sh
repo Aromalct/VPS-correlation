@@ -277,7 +277,7 @@ install_iptables_persistent(){
 
 Test_port_disablement(){
 #	read -p "请输入端口:" port
-	nc -vz smtp-relay.gmail.com $port
+	nc -vz smtp-relay.gmail.com 25
 	reto_menu_exit
 }
 
