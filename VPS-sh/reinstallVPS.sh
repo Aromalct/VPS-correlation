@@ -270,9 +270,9 @@ install_iptables_persistent(){
     read -p "(是否测试生效情况：y/n):" yn
 		[[ -z "${yn}" ]] && yn="y"
 		if [[ ${yn} == [Yy] ]]; then
-				nc -vz smtp-relay.gmail.com 25
+			nc -vz smtp-relay.gmail.com 25
 		fi
-    reto_menu_exit
+	reto_menu_exit	
 }
 
 Test_port_disablement(){
@@ -416,24 +416,4 @@ reto_menu_exit(){
 
 
 start_menu
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
 
