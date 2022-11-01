@@ -340,7 +340,8 @@ install_acme(){
 	. .bashrc
 	bash /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 	echo -e "设置环境变量"
-    export CF_Token="7SwQ9DMEspervzHdYmYjUnLXRsqnwaScrNKwJESS"
+    export CF_Token="b-rfrzCgmuqsEHrf2QPUBIQhf_8OXxLIz9iBumlZ"
+    #export CF_Token="7SwQ9DMEspervzHdYmYjUnLXRsqnwaScrNKwJESS"
     export CF_Account_ID="2efe8bf5451b8ada432a5ef2b04ee7cd"
 	echo -e "测试从指定服务器申请证书"
 	read -p "请输入域名:" domain
