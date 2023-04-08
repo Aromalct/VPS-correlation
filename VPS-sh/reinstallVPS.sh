@@ -385,8 +385,9 @@ install_V2_UI(){
 
 install_X_UI(){
     #bash <(curl -Ls https://raw.githubusercontent.com/sprov065/x-ui/master/install.sh)
-	bash <(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh)
-	x-ui
+    #bash <(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh)
+    bash <(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh)
+    x-ui
 	
 }
 
