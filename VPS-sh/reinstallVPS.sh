@@ -359,6 +359,9 @@ install_acme(){
 	            bash /root/.acme.sh/acme.sh --install-cert -d $domain --ecc \
                         --fullchain-file /etc/ssl/$domain/$domain.crt \
                         --key-file /etc/ssl/$domain/$domain.key
+		    cd /etc/caddy/
+                    caddy reload
+		    echo && echo "证书申请、安装成功..."
 			else
 			echo && echo "证书申请、安装失败..." && echo
 		fi
